@@ -1,8 +1,25 @@
 <?php
 include_once "config.local.php";
 
-$conx = new mysqli(SERVERNAME, USERNAME, PASSWORD, DBNAME);
+class Conexao
+{
+    private $conx;
+    public function iniciar()
+    {
+        $this->conx = new mysqli(SERVERNAME, USERNAME, PASSWORD, DBNAME);
 
-if ($conx->connect_error) {
-    die("Conexão com banco de dados falhou: " . $conx->connect_error);
+        if ($this->conx->connect_error) {
+            die("Conexão com banco de dados falhou: " . $this->conx->connect_error);
+        }
+
+        return $this->conx;
+    }
+
+    public function fechar()
+    {
+
+        if ($this->conx) {
+            $this->conx->close();
+        }
+    }
 }
